@@ -86,7 +86,7 @@ We tried 2 different types of loss - VGG Loss and MSE Loss. The model was traine
 
 ## Results
 
-### X-Ray Image Denoising:
+### 1. X-Ray Image Denoising:
 For denoising of images, on running for 200 epochs, we were able to achieve a loss of 0.00029. Some results obtained are as follows:<br>
 
 <image src="./screenshots/7.png"><br>
@@ -102,9 +102,9 @@ PSNR (Denoised): 5.8340839697113385
 ```
 As you can see, the SSIM and PSNR have increased after denoising, which was the aim of the project.<br>
 
----
 
-### Image Super-Resolution:
+
+### 2. Image Super-Resolution:
 
 For the super resolution of images, we were able to obtain a training loss of around 0.001 and some of the results on the test images are here:<br>
 
