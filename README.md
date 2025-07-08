@@ -1,4 +1,5 @@
 # Image Quality Manipulation using Deep Autoencoders
+
 <image src="./Screenshots/a.png">
     
 ## Mentors
@@ -50,12 +51,17 @@ We made use of 2 datasets that were publicly available on Kaggle for performing 
 
 ### 1. Denoising of Images
 
-Presence of noise in an image makes it difficult to interpret. As our dataset had noise free images of Teeth X-Ray, we first artificially induce noise into these images. We chose randomly between adding noise from a Gaussian Distribution (Gaussian Noise) and noise from a Uniform Distribution (Uniform Noise). <br>
+Presence of noise in an image makes it difficult to interpret. As our dataset had noise free images of Teeth X-Ray, we first artificially induce noise into these images. We chose randomly between adding noise from a Gaussian Distribution (Gaussian Noise) and noise from a Uniform Distribution (Uniform Noise). 
+
+<br>
 <image src="./Screenshots/1.png"><br>
 
 We then used an architecture that would model a UNET here. We use an autoencoder with skip connections (non-conventional U-Net) to obtain the denoised image from the noisy image. The autoencoder architecture comprises an encoder, consisting of two convolutional layers with ReLU activation, facilitating the compression of input images into a lower-dimensional representation. Following encoding, the decoder utilizes upsampling layers to reconstruct the original image dimensions. Skip connections are also employed to preserve spatial information during reconstruction. We finally use the sigmoid activation function to get the pixel values in the range [0,1].<br>
+
 <image src="./Screenshots/2.png"><br>
+
 Our architecture consisted of 2 encoder layers followed by 2 decoder layers and we also employed the use of skip connections for garnering global context.<br>
+
 <image src="./Screenshots/3.png"><br>
 
 We then used Cross Entropy Loss as the loss function and Adam as the optimiser. The model was trianed for 200 epochs and the learning rate to be around 1e-5. We were able to converge to a loss of around 0.000290 from 0.007233.<br>
@@ -64,22 +70,27 @@ We then used Cross Entropy Loss as the loss function and Adam as the optimiser. 
 ### 2. Super Resolution of Images
 
 Super resolution of images involves transforming a low quality image into a higher quality image while maintaining the content, color and details as much as possible. <br>
+
+
 <image src="./Screenshots/4.png"><br>
 
 Again, we used an autoencoder to perform this task. We model a U-Net to do this where the encoder layer has a series of downsampling blocks, each consisting of two convolutional layers, after which we do batch normalization and activation by ReLU. This is for feature extraction and dimensionality reduction. Following this we have a bottleneck layer that acts as a bridge between the encoder and the decoder. The decoder consists of transpose convolutional layers that are used for upsampling. Moreover, at each upsampling step, we have skip connections from the encoder to help in understanding spatial context. Lastly, we have a 1*1 convolutional layer to adjust the number of output channels. <br>
+
 <image src="./Screenshots/5.png"><br>
 
 We however, used a more complex architecture as compared to the denoising model with 5 encoder layers, also making use of skip connections.<br>
+
 <image src="./Screenshots/6.png"><br>
 
 We tried 2 different types of loss - VGG Loss and MSE Loss. The model was trained for first 10 epochs using a combination of VGG Loss annd MSE loss to ensure semantic accuracy, and then using only MSE Loss for 10 more. Adam optimiser with learning rate of 0.0002 was used, the loss converged to about 0.001.<br>
 
 ## Results
 
-### X-Ray Image Denoising
+### X-Ray Image Denoising:
 For denoising of images, on running for 200 epochs, we were able to achieve a loss of 0.00029. Some results obtained are as follows:<br>
-<image src="./Screenshots/7.png">
-<br>
+
+<image src="./Screenshots/7.png"><br>
+
 <image src="./Screenshots/8.png"><br>
 
 Here are the calculated Median SSIM and PSNR on the entire dataset:<br>
@@ -91,19 +102,22 @@ PSNR (Denoised): 5.8340839697113385
 ```
 As you can see, the SSIM and PSNR have increased after denoising, which was the aim of the project.<br>
 
-### Image Super-Resolution
+---
+
+### Image Super-Resolution:
 
 For the super resolution of images, we were able to obtain a training loss of around 0.001 and some of the results on the test images are here:<br>
-<image src="./Screenshots/9.png">
-<br>
-<image src="./Screenshots/10.png">
-<br>
-<image src="./Screenshots/11.png">
-<br>
-<image src="./Screenshots/12.png">
-<br>
-<image src="./Screenshots/13.png">
-<br>
+
+<image src="./Screenshots/9.png"><br>
+
+<image src="./Screenshots/10.png"><br>
+
+<image src="./Screenshots/11.png"><br>
+
+<image src="./Screenshots/12.png"><br>
+
+<image src="./Screenshots/13.png"><br>
+
 ## Streamlit Interface
 
 1. We were also able to create a simple user interface using Streamlit. After training the model for both tasks, we saved their weights, which allows us to use the model for any image without having to train again.<br>
@@ -112,10 +126,11 @@ For the super resolution of images, we were able to obtain a training loss of ar
 ## Conclusion
 
 We were able to build 2 models that could successfully perform denoising and super resolution with great accuracy, and deploy models for both tasks using Streamlit, where users can select an input image to either denoise or get a higher resolution image. <br>
-<image src="./Screenshots/14.png">
-<br>
-<image src="./Screenshots/15.jpg">
-<br>
+
+<image src="./Screenshots/14.png"><br>
+
+<image src="./Screenshots/15.jpg"><br>
+
 ## Running the Streamlit App
 
 1. Ensure that you have installed Git on your system.
